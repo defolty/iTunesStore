@@ -13,15 +13,23 @@ class SearchResultCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var artistNameLabel: UILabel!
     
+    ///# Метод `awakeFromNib()` вызывается после загрузки объекта ячейки из `nib`,
+    ///# но до добавления ячейки в табличное представление
+    ///# !!! Вызывается через некоторое время после `init?(coder:)`
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        setupSelectedView()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    private func setupSelectedView() {
+        let selectedView = UIView(frame: CGRect.zero)
+        selectedView.backgroundColor = UIColor(
+            red: 20/255,
+            green: 160/255,
+            blue: 160/255,
+            alpha: 0.5
+        )
+        selectedBackgroundView = selectedView
     }
-
 }
