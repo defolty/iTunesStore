@@ -9,6 +9,7 @@ import UIKit
  
 struct Constants {
     static let searchResultCell = "SearchResultCell"
+    static let nothingFoundCell = "NothingFoundCell"
 }
   
 // MARK: - SeachBar Setup
@@ -59,18 +60,23 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.searchResultCell, for: indexPath)
-         
         if searchResults.count == 0 {
-            cell.textLabel!.text = "(Nothing found)"
-            cell.detailTextLabel!.text = ""
+            return tableView.dequeueReusableCell(
+                withIdentifier: Constants.nothingFoundCell,
+                for: indexPath
+            )
         } else {
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.searchResultCell,
+                for: indexPath
+            ) as! SearchResultCell
+            
             let searchResult = searchResults[indexPath.row]
-            cell.textLabel!.text = searchResult.name
-            cell.detailTextLabel!.text = searchResult.artistName
+            cell.nameLabel.text = searchResult.name
+            cell.artistNameLabel.text = searchResult.artistName
+            
+            return cell
         }
-        
-        return cell
     }
 }
 
@@ -87,6 +93,7 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        registerCells()
         setupTableView()
     }
     
@@ -97,15 +104,24 @@ class SearchViewController: UIViewController {
             top: 64, left: 0,
             bottom: 0, right: 0
         )
-        
+    }
+    
+    private func registerCells() {
         let cellNib = UINib(
             nibName: Constants.searchResultCell,
             bundle: nil
         )
-        
         tableView.register(
             cellNib,
             forCellReuseIdentifier: Constants.searchResultCell
+        )
+        let nothingCellNib = UINib(
+            nibName: Constants.nothingFoundCell,
+            bundle: nil
+        )
+        tableView.register(
+            nothingCellNib,
+            forCellReuseIdentifier: Constants.nothingFoundCell
         )
     }
 }

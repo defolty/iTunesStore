@@ -16,6 +16,7 @@
 		FBBC4E6228C21F620033AB6D /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E6128C21F620033AB6D /* SearchModel.swift */; };
 		FBBC4E6528C228760033AB6D /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBBC4E6428C228760033AB6D /* SearchResultCell.xib */; };
 		FBBC4E6728C23C9F0033AB6D /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E6628C23C9F0033AB6D /* SearchResultCell.swift */; };
+		FBBC4E6F28C242720033AB6D /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBBC4E6E28C242720033AB6D /* NothingFoundCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		FBBC4E6128C21F620033AB6D /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		FBBC4E6428C228760033AB6D /* SearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
 		FBBC4E6628C23C9F0033AB6D /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
+		FBBC4E6E28C242720033AB6D /* NothingFoundCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NothingFoundCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,15 +64,13 @@
 		FBBC4E4C28C1F3D10033AB6D /* iTunesStore */ = {
 			isa = PBXGroup;
 			children = (
-				FBBC4E6328C21F6A0033AB6D /* Supporting Files */,
-				FBBC4E6128C21F620033AB6D /* SearchModel.swift */,
-				FBBC4E5128C1F3D10033AB6D /* SearchViewController.swift */,
-				FBBC4E5328C1F3D10033AB6D /* Main.storyboard */,
-				FBBC4E6628C23C9F0033AB6D /* SearchResultCell.swift */,
-				FBBC4E6428C228760033AB6D /* SearchResultCell.xib */,
 				FBBC4E5628C1F3D20033AB6D /* Assets.xcassets */,
 				FBBC4E5828C1F3D20033AB6D /* LaunchScreen.storyboard */,
 				FBBC4E5B28C1F3D20033AB6D /* Info.plist */,
+				FBBC4E6328C21F6A0033AB6D /* Supporting Files */,
+				FBBC4E6A28C23D6C0033AB6D /* Models */,
+				FBBC4E6B28C23D730033AB6D /* Controllers */,
+				FBBC4E6828C23D180033AB6D /* Views */,
 			);
 			path = iTunesStore;
 			sourceTree = "<group>";
@@ -82,6 +82,57 @@
 				FBBC4E4F28C1F3D10033AB6D /* SceneDelegate.swift */,
 			);
 			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FBBC4E6828C23D180033AB6D /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FBBC4E5328C1F3D10033AB6D /* Main.storyboard */,
+				FBBC4E6928C23D240033AB6D /* Cells */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FBBC4E6928C23D240033AB6D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				FBBC4E6D28C242600033AB6D /* SearchResultCell */,
+				FBBC4E7028C242770033AB6D /* NothingFoundCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		FBBC4E6A28C23D6C0033AB6D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FBBC4E6128C21F620033AB6D /* SearchModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		FBBC4E6B28C23D730033AB6D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FBBC4E5128C1F3D10033AB6D /* SearchViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		FBBC4E6D28C242600033AB6D /* SearchResultCell */ = {
+			isa = PBXGroup;
+			children = (
+				FBBC4E6628C23C9F0033AB6D /* SearchResultCell.swift */,
+				FBBC4E6428C228760033AB6D /* SearchResultCell.xib */,
+			);
+			path = SearchResultCell;
+			sourceTree = "<group>";
+		};
+		FBBC4E7028C242770033AB6D /* NothingFoundCell */ = {
+			isa = PBXGroup;
+			children = (
+				FBBC4E6E28C242720033AB6D /* NothingFoundCell.xib */,
+			);
+			path = NothingFoundCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -145,6 +196,7 @@
 				FBBC4E5A28C1F3D20033AB6D /* LaunchScreen.storyboard in Resources */,
 				FBBC4E5728C1F3D20033AB6D /* Assets.xcassets in Resources */,
 				FBBC4E6528C228760033AB6D /* SearchResultCell.xib in Resources */,
+				FBBC4E6F28C242720033AB6D /* NothingFoundCell.xib in Resources */,
 				FBBC4E5528C1F3D10033AB6D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
