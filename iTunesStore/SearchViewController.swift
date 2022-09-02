@@ -6,7 +6,11 @@
 //
 
 import UIKit
-
+ 
+struct Constants {
+    static let searchResultCell = "SearchResultCell"
+}
+  
 // MARK: - SeachBar Setup
 
 extension SearchViewController: UISearchBarDelegate {
@@ -55,14 +59,8 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "SearchResultCell"
-        
-        var cell: UITableViewCell! = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-        
-        if cell == nil {
-            cell = UITableViewCell(style: .subtitle, reuseIdentifier: cellIdentifier)
-        }
-        
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.searchResultCell, for: indexPath)
+         
         if searchResults.count == 0 {
             cell.textLabel!.text = "(Nothing found)"
             cell.detailTextLabel!.text = ""
@@ -99,7 +97,16 @@ class SearchViewController: UIViewController {
             top: 64, left: 0,
             bottom: 0, right: 0
         )
+        
+        let cellNib = UINib(
+            nibName: Constants.searchResultCell,
+            bundle: nil
+        )
+        
+        tableView.register(
+            cellNib,
+            forCellReuseIdentifier: Constants.searchResultCell
+        )
     }
 }
-
 
