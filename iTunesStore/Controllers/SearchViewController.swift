@@ -38,16 +38,30 @@ extension SearchViewController: UISearchBarDelegate {
             
             hasSearched = true
             searchResults = []
+            ///# Получена ссылка на очередь. Вы используете `"global"` очередь,
+            ///# то есть очередь, предоставляемую системой.
+            ///# Также получаем здесь URL-адрес для поиска, за пределами клоужера.
+            let queue = DispatchQueue.global()
+            let url = self.iTunesURL(searchText: searchBar.text!)
             
-            let url = iTunesURL(searchText: searchBar.text!)
-            print("URL: '\(url)'")
-            
-            if let data = performStoreRequest(with: url) {
-                searchResults = parse(data: data)
-                searchResults.sort(by: <) //searchResults.sort { $0 < $1 }
+            ///# Как только у вас есть очередь, вы можете отправить на нее клоужер -
+            ///# все, что находится между `queue.async` { и клоужером } является клоужером.
+            ///# Любой код в клоужере будет помещен в очередь и будет выполняться асинхронно в фоновом режиме.
+            ///# После планирования этого клоужера главный поток может продолжить работу.
+            ///# Он больше не заблокирован.
+            queue.async {
+                if let data = self.performStoreRequest(with: url) {
+                    self.searchResults = self.parse(data: data)
+                    self.searchResults.sort(by: <)
+                    
+                    ///# Панируем новый клоужер главной очереди
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        self.tableView.reloadData()
+                    }
+                    return
+                }
             }
-            isLoading = false
-            tableView.reloadData()
         }
     }
     
