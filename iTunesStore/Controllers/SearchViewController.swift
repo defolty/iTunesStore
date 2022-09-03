@@ -37,6 +37,7 @@ extension SearchViewController: UISearchBarDelegate {
             
             if let data = performStoreRequest(with: url) {
                 searchResults = parse(data: data)
+                searchResults.sort(by: <) //searchResults.sort { $0 < $1 }
             }
             tableView.reloadData()
         }
@@ -66,17 +67,20 @@ extension SearchViewController: UITableViewDataSource {
         if searchResults.count == 0 {
             return tableView.dequeueReusableCell(
                 withIdentifier: Constants.nothingFoundCell,
-                for: indexPath
-            )
+                for: indexPath)
         } else {
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: Constants.searchResultCell,
-                for: indexPath
-            ) as! SearchResultCell
-            
+                for: indexPath) as! SearchResultCell
             let searchResult = searchResults[indexPath.row]
             cell.nameLabel.text = searchResult.name
-            cell.artistNameLabel.text = searchResult.artistName
+            
+            if searchResult.artist.isEmpty {
+                cell.artistNameLabel.text = "Unknown"
+            } else {
+                cell.artistNameLabel.text = String(format: "%@ (%@)",
+                                                   searchResult.artist, searchResult.type)
+            }
             
             return cell
         }
