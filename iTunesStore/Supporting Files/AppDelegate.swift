@@ -10,14 +10,17 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    /*
     func customizeAppearance() {
         let barTintColor = UIColor(red: 20/255, green: 160/255, blue: 160/255, alpha: 1)
         UISearchBar.appearance().barTintColor = barTintColor
+        UISearchBar.appearance().backgroundImage = UIImage()
+        UISearchBar.appearance().isTranslucent = true
     }
-
-
+     */
+ 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        customizeAppearance()
+        //customizeAppearance()
         return true
     }
 

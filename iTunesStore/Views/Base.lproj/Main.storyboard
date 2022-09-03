@@ -24,7 +24,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Ktl-Em-lPp"/>
                                 </connections>
                             </tableView>
-                            <searchBar contentMode="redraw" placeholder="App name, artist, song" translatesAutoresizingMaskIntoConstraints="NO" id="73R-yL-kZh">
+                            <searchBar contentMode="redraw" placeholder="App name, artist, song" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="73R-yL-kZh">
                                 <rect key="frame" x="0.0" y="44" width="414" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
