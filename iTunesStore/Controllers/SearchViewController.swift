@@ -10,13 +10,17 @@ import UIKit
 struct Constants {
     static let searchResultCell = "SearchResultCell"
     static let nothingFoundCell = "NothingFoundCell"
+    static let loadingCell = "LoadingCell"
 }
   
 // MARK: - SeachBar Setup
 
 extension SearchViewController: UISearchBarDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if !hasSearched {
+        
+        if isLoading {
+            return 1
+        } else if !hasSearched {
             return 0
         } else if searchResults.count == 0 {
             return 1
@@ -29,6 +33,9 @@ extension SearchViewController: UISearchBarDelegate {
         if !searchBar.text!.isEmpty {
             searchBar.resignFirstResponder()
             
+            isLoading = true
+            tableView.reloadData()
+            
             hasSearched = true
             searchResults = []
             
@@ -39,6 +46,7 @@ extension SearchViewController: UISearchBarDelegate {
                 searchResults = parse(data: data)
                 searchResults.sort(by: <) //searchResults.sort { $0 < $1 }
             }
+            isLoading = false
             tableView.reloadData()
         }
     }
@@ -56,7 +64,7 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
-        if searchResults.count == 0 {
+        if searchResults.count == 0 || isLoading {
             return nil
         } else {
             return indexPath
@@ -64,7 +72,15 @@ extension SearchViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if searchResults.count == 0 {
+        if isLoading {
+            let cell = tableView.dequeueReusableCell(
+                withIdentifier: Constants.loadingCell,
+                for: indexPath
+            )
+            let spinner = cell.viewWithTag(100) as! UIActivityIndicatorView
+            spinner.startAnimating()
+            return cell
+        } else if searchResults.count == 0 {
             return tableView.dequeueReusableCell(
                 withIdentifier: Constants.nothingFoundCell,
                 for: indexPath)
@@ -94,8 +110,10 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
-    var hasSearched = false
-    var searchResults = [SearchResult]()
+    private var hasSearched = false
+    private var isLoading = false
+    
+    private var searchResults = [SearchResult]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +123,7 @@ class SearchViewController: UIViewController {
         setupTableView()
     }
     
-    func performStoreRequest(with url: URL) -> Data? {
+    private func performStoreRequest(with url: URL) -> Data? {
         do {
             return try Data(contentsOf: url)
         } catch {
@@ -115,7 +133,7 @@ class SearchViewController: UIViewController {
         }
     }
     
-    func parse(data: Data) -> [SearchResult] {
+    private func parse(data: Data) -> [SearchResult] {
         do {
             ///# Объект `JSONDecoder` для преобразования данных ответа от сервера во временный объект `ResultArray`
             ///# Из которого извлекаем свойство `results` если всё ок
@@ -128,20 +146,20 @@ class SearchViewController: UIViewController {
         }
     }
     
-    func iTunesURL(searchText: String) -> URL {
+    private func iTunesURL(searchText: String) -> URL {
         ///# Для создания новой строки, в которой все специальные символы исключены, и вы используете эту строку для поискового термина
         let encodedText = searchText.addingPercentEncoding(
             withAllowedCharacters: CharacterSet.urlQueryAllowed
         )!
         let urlString = String(
-            format: "https://itunes.apple.com/search?term=%@",
+            format: "https://itunes.apple.com/search?term=%@&limit=200",
             encodedText
         )
         let url = URL(string: urlString)!
         return url
     }
     
-    func showNetworkError() {
+    private func showNetworkError() {
         let alert = UIAlertController(
             title: "Whoops...",
             message: "There was an error accessing the iTunes Store." + " Please try again.",
@@ -166,7 +184,7 @@ class SearchViewController: UIViewController {
     }
     
     private func registerCells() {
-        let cellNib = UINib(
+        var cellNib = UINib(
             nibName: Constants.searchResultCell,
             bundle: nil
         )
@@ -174,13 +192,21 @@ class SearchViewController: UIViewController {
             cellNib,
             forCellReuseIdentifier: Constants.searchResultCell
         )
-        let nothingCellNib = UINib(
+        cellNib = UINib(
             nibName: Constants.nothingFoundCell,
             bundle: nil
         )
         tableView.register(
-            nothingCellNib,
+            cellNib,
             forCellReuseIdentifier: Constants.nothingFoundCell
+        )
+        cellNib = UINib(
+            nibName: Constants.loadingCell,
+            bundle: nil
+        )
+        tableView.register(
+            cellNib, forCellReuseIdentifier:
+                Constants.loadingCell
         )
     }
 }

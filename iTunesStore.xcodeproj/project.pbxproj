@@ -17,6 +17,7 @@
 		FBBC4E6528C228760033AB6D /* SearchResultCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBBC4E6428C228760033AB6D /* SearchResultCell.xib */; };
 		FBBC4E6728C23C9F0033AB6D /* SearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E6628C23C9F0033AB6D /* SearchResultCell.swift */; };
 		FBBC4E6F28C242720033AB6D /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBBC4E6E28C242720033AB6D /* NothingFoundCell.xib */; };
+		FBBC4E7528C3D5B00033AB6D /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBBC4E7428C3D5B00033AB6D /* LoadingCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		FBBC4E6428C228760033AB6D /* SearchResultCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchResultCell.xib; sourceTree = "<group>"; };
 		FBBC4E6628C23C9F0033AB6D /* SearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultCell.swift; sourceTree = "<group>"; };
 		FBBC4E6E28C242720033AB6D /* NothingFoundCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NothingFoundCell.xib; sourceTree = "<group>"; };
+		FBBC4E7428C3D5B00033AB6D /* LoadingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 		FBBC4E6928C23D240033AB6D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				FBBC4E7628C3D5B80033AB6D /* ActivitiIndicator */,
 				FBBC4E6D28C242600033AB6D /* SearchResultCell */,
 				FBBC4E7028C242770033AB6D /* NothingFoundCell */,
 			);
@@ -133,6 +136,14 @@
 				FBBC4E6E28C242720033AB6D /* NothingFoundCell.xib */,
 			);
 			path = NothingFoundCell;
+			sourceTree = "<group>";
+		};
+		FBBC4E7628C3D5B80033AB6D /* ActivitiIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				FBBC4E7428C3D5B00033AB6D /* LoadingCell.xib */,
+			);
+			path = ActivitiIndicator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -195,6 +206,7 @@
 			files = (
 				FBBC4E5A28C1F3D20033AB6D /* LaunchScreen.storyboard in Resources */,
 				FBBC4E5728C1F3D20033AB6D /* Assets.xcassets in Resources */,
+				FBBC4E7528C3D5B00033AB6D /* LoadingCell.xib in Resources */,
 				FBBC4E6528C228760033AB6D /* SearchResultCell.xib in Resources */,
 				FBBC4E6F28C242720033AB6D /* NothingFoundCell.xib in Resources */,
 				FBBC4E5528C1F3D10033AB6D /* Main.storyboard in Resources */,
