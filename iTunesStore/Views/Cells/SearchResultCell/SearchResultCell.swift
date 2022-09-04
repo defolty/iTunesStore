@@ -24,6 +24,13 @@ class SearchResultCell: UITableViewCell {
         setupSelectedView()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        downloadTask?.cancel()
+        downloadTask = nil 
+    }
+    
     // MARK: - Public Methods
     
     func configure(for result: SearchResult) {
