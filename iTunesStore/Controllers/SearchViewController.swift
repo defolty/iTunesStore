@@ -49,6 +49,9 @@ extension SearchViewController: UISearchBarDelegate {
                     ///# вы будете считать задание успешным, только если его значение равно `200`
                 } else if let httpResponse = response as? HTTPURLResponse,
                           httpResponse.statusCode == 200 {
+                    ///# Это разворачивает опционал объект из параметра `data`
+                    ///# затем вызывает `parse(data:)`
+                    ///# чтобы превратить содержимое словаря в объекты `SearchResult`
                     if let data = data {
                         self.searchResults = self.parse(data: data)
                         self.searchResults.sort(by: <)
