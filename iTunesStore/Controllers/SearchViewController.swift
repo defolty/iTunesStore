@@ -27,6 +27,7 @@ extension SearchViewController: UISearchBarDelegate {
         if !searchBar.text!.isEmpty {
             searchBar.resignFirstResponder()
             
+            dataTask?.cancel()
             isLoading = true
             tableView.reloadData()
             
@@ -38,9 +39,9 @@ extension SearchViewController: UISearchBarDelegate {
             ///# `shared` - общий экземпляр `URLSession`
             let session = URLSession.shared
             
-            let dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
+            dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
                 print("On main thread? " + (Thread.current.isMainThread ? "Yes" : "No"))
-                if let error = error {
+                if let error = error as NSError?, error.code == -999 {
                     print("Failure! \(error)")
                     ///# Параметр ответа имеет тип данных `URLResponse`, но у него нет свойства для кода статуса.
                     ///# Поскольку вы используете протокол `HTTP`,
@@ -75,7 +76,7 @@ extension SearchViewController: UISearchBarDelegate {
             ///# как только создана `dataTask`, нужно вызвать `resume()` для ее запуска.
             ///# Это отправит запрос на сервер в фоновом потоке.
             ///# Таким образом, приложение сразу же может продолжать работу - `URLSession` является асинхронным
-            dataTask.resume()
+            dataTask?.resume()
         }
     }
     
@@ -141,6 +142,7 @@ class SearchViewController: UIViewController {
     
     private var hasSearched = false
     private var isLoading = false
+    private var dataTask: URLSessionDataTask?
     
     private var searchResults = [SearchResult]()
     
