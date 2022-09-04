@@ -24,6 +24,10 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        performSearch()
+    }
+    
+    func performSearch() {
         if !searchBar.text!.isEmpty {
             searchBar.resignFirstResponder()
             
@@ -34,7 +38,7 @@ extension SearchViewController: UISearchBarDelegate {
             hasSearched = true
             searchResults = []
             
-            let url = iTunesURL(searchText: searchBar.text!)
+            let url = iTunesURL(searchText: searchBar.text!, category: segmentedControl.selectedSegmentIndex)
             
             ///# `shared` - общий экземпляр `URLSession`
             let session = URLSession.shared
@@ -118,16 +122,7 @@ extension SearchViewController: UITableViewDataSource {
                 withIdentifier: Constants.searchResultCell,
                 for: indexPath) as! SearchResultCell
             let searchResult = searchResults[indexPath.row]
-            cell.nameLabel.text = searchResult.name
-            
-            if searchResult.artist.isEmpty {
-                cell.artistNameLabel.text = "Unknown"
-            } else {
-                cell.artistNameLabel.text = String(
-                    format: "%@ (%@)",
-                    searchResult.artist, searchResult.type
-                )
-            }
+            cell.configure(for: searchResult)
             return cell
         }
     }
@@ -139,6 +134,7 @@ class SearchViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     private var hasSearched = false
     private var isLoading = false
@@ -167,16 +163,23 @@ class SearchViewController: UIViewController {
         }
     }
     
-    private func iTunesURL(searchText: String) -> URL {
-        ///# Для создания новой строки, в которой все специальные символы исключены, и вы используете эту строку для поискового термина
+    private func iTunesURL(searchText: String, category: Int) -> URL {
+        let kind: String
+        switch category {
+        case 1: kind = "musicTrack"
+        case 2: kind = "software"
+        case 3: kind = "ebook"
+        default: kind = ""
+        }
+        
         let encodedText = searchText.addingPercentEncoding(
             withAllowedCharacters: CharacterSet.urlQueryAllowed
         )!
-        let urlString = String(
-            format: "https://itunes.apple.com/search?term=%@&limit=200",
-            encodedText
-        )
+        let urlString = "https://itunes.apple.com/search?" +
+        "term=\(encodedText)&limit=200&entity=\(kind)"
+        
         let url = URL(string: urlString)!
+        
         return url
     }
     
@@ -193,15 +196,6 @@ class SearchViewController: UIViewController {
         )
         alert.addAction(action)
         present(alert, animated: true, completion: nil)
-    }
-    
-    private func setupTableView() {
-        ///# Это указывает tableView добавить 64-точечное поле сверху - 20 точек для строки состояния и 44 точки для строки поиска.
-        ///# Теперь первая строка всегда будет видна, а при прокрутке представления таблицы ячейки все равно попадают под строку поиска.
-        tableView.contentInset = UIEdgeInsets(
-            top: 64, left: 0,
-            bottom: 0, right: 0
-        )
     }
     
     private func registerCells() {
@@ -229,6 +223,31 @@ class SearchViewController: UIViewController {
             cellNib, forCellReuseIdentifier:
                 Constants.loadingCell
         )
+    }
+    
+    private func setupTableView() {
+        ///# Это указывает tableView добавить 64-точечное поле сверху - 20 точек для строки состояния и 44 точки для строки поиска.
+        ///# Теперь первая строка всегда будет видна, а при прокрутке представления таблицы ячейки все равно попадают под строку поиска.
+        tableView.contentInset = UIEdgeInsets(
+            top: 108, left: 0,
+            bottom: 0, right: 0
+        )
+    }
+    
+    private func setupSegmentedControl() {
+        let segmentColor = UIColor(red: 10/255, green: 80/255, blue: 80/255, alpha: 1)
+        let selectedTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let normalTextAttributes = [NSAttributedString.Key.foregroundColor: segmentColor]
+        segmentedControl.selectedSegmentTintColor = segmentColor
+        segmentedControl.setTitleTextAttributes(normalTextAttributes, for: .normal)
+        segmentedControl.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+        segmentedControl.setTitleTextAttributes(selectedTextAttributes, for: .highlighted)
+    }
+    
+    // MARK: - Action's
+
+    @IBAction func segmentedChanged(_ sender: UISegmentedControl) {
+        performSearch()
     }
 }
 
