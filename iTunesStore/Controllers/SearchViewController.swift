@@ -39,6 +39,7 @@ extension SearchViewController: UISearchBarDelegate {
             let session = URLSession.shared
             
             let dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
+                print("On main thread? " + (Thread.current.isMainThread ? "Yes" : "No"))
                 if let error = error {
                     print("Failure! \(error)")
                     ///# Параметр ответа имеет тип данных `URLResponse`, но у него нет свойства для кода статуса.
@@ -63,6 +64,12 @@ extension SearchViewController: UISearchBarDelegate {
                     }
                 } else {
                     print("Failure! \(response!)")
+                }
+                DispatchQueue.main.async {
+                    self.hasSearched = false
+                    self.isLoading = false
+                    self.tableView.reloadData()
+                    self.showNetworkError()
                 }
             })
             ///# как только создана `dataTask`, нужно вызвать `resume()` для ее запуска.
@@ -115,8 +122,10 @@ extension SearchViewController: UITableViewDataSource {
             if searchResult.artist.isEmpty {
                 cell.artistNameLabel.text = "Unknown"
             } else {
-                cell.artistNameLabel.text = String(format: "%@ (%@)",
-                                                   searchResult.artist, searchResult.type)
+                cell.artistNameLabel.text = String(
+                    format: "%@ (%@)",
+                    searchResult.artist, searchResult.type
+                )
             }
             return cell
         }
