@@ -7,12 +7,6 @@
 
 import UIKit
  
-struct Constants {
-    static let searchResultCell = "SearchResultCell"
-    static let nothingFoundCell = "NothingFoundCell"
-    static let loadingCell = "LoadingCell"
-}
-  
 // MARK: - SeachBar Setup
 
 extension SearchViewController: UISearchBarDelegate {
@@ -38,30 +32,40 @@ extension SearchViewController: UISearchBarDelegate {
             
             hasSearched = true
             searchResults = []
-            ///# Получена ссылка на очередь. Вы используете `"global"` очередь,
-            ///# то есть очередь, предоставляемую системой.
-            ///# Также получаем здесь URL-адрес для поиска, за пределами клоужера.
-            let queue = DispatchQueue.global()
-            let url = self.iTunesURL(searchText: searchBar.text!)
             
-            ///# Как только у вас есть очередь, вы можете отправить на нее клоужер -
-            ///# все, что находится между `queue.async` { и клоужером } является клоужером.
-            ///# Любой код в клоужере будет помещен в очередь и будет выполняться асинхронно в фоновом режиме.
-            ///# После планирования этого клоужера главный поток может продолжить работу.
-            ///# Он больше не заблокирован.
-            queue.async {
-                if let data = self.performStoreRequest(with: url) {
-                    self.searchResults = self.parse(data: data)
-                    self.searchResults.sort(by: <)
-                    
-                    ///# Панируем новый клоужер главной очереди
-                    DispatchQueue.main.async {
-                        self.isLoading = false
-                        self.tableView.reloadData()
+            let url = iTunesURL(searchText: searchBar.text!)
+            
+            ///# `shared` - общий экземпляр `URLSession`
+            let session = URLSession.shared
+            
+            let dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
+                if let error = error {
+                    print("Failure! \(error)")
+                    ///# Параметр ответа имеет тип данных `URLResponse`, но у него нет свойства для кода статуса.
+                    ///# Поскольку вы используете протокол `HTTP`,
+                    ///# то на самом деле вы получили объект `HTTPURLResponse`, подкласс `URLResponse`
+                    ///# Поэтому сначала приведите его к нужному типу,
+                    ///# а затем посмотрите на его свойство `statusCode` -
+                    ///# вы будете считать задание успешным, только если его значение равно `200`
+                } else if let httpResponse = response as? HTTPURLResponse,
+                          httpResponse.statusCode == 200 {
+                    if let data = data {
+                        self.searchResults = self.parse(data: data)
+                        self.searchResults.sort(by: <)
+                        DispatchQueue.main.async {
+                            self.isLoading = false
+                            self.tableView.reloadData()
+                        }
+                        return
                     }
-                    return
+                } else {
+                    print("Failure! \(response!)")
                 }
-            }
+            })
+            ///# как только создана `dataTask`, нужно вызвать `resume()` для ее запуска.
+            ///# Это отправит запрос на сервер в фоновом потоке.
+            ///# Таким образом, приложение сразу же может продолжать работу - `URLSession` является асинхронным
+            dataTask.resume()
         }
     }
     
@@ -69,7 +73,7 @@ extension SearchViewController: UISearchBarDelegate {
         return .topAttached
     }
 }
- 
+
 // MARK: - TableView Setup
 
 extension SearchViewController: UITableViewDataSource {
@@ -111,7 +115,6 @@ extension SearchViewController: UITableViewDataSource {
                 cell.artistNameLabel.text = String(format: "%@ (%@)",
                                                    searchResult.artist, searchResult.type)
             }
-            
             return cell
         }
     }
@@ -136,17 +139,7 @@ class SearchViewController: UIViewController {
         registerCells()
         setupTableView()
     }
-    
-    private func performStoreRequest(with url: URL) -> Data? {
-        do {
-            return try Data(contentsOf: url)
-        } catch {
-            print("Download Error: \(error)")
-            showNetworkError()
-            return nil
-        }
-    }
-    
+     
     private func parse(data: Data) -> [SearchResult] {
         do {
             ///# Объект `JSONDecoder` для преобразования данных ответа от сервера во временный объект `ResultArray`
