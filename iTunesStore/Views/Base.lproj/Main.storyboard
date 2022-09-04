@@ -31,14 +31,38 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="GKS-Hq-aFv"/>
                                 </connections>
                             </searchBar>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iuq-Ic-tdb">
+                                <rect key="frame" x="0.0" y="95" width="414" height="44"/>
+                                <items>
+                                    <navigationItem id="9lP-nJ-zSO">
+                                        <nil key="title"/>
+                                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="q8m-w4-2X2">
+                                            <rect key="frame" x="57" y="5.5" width="300" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <segments>
+                                                <segment title="All"/>
+                                                <segment title="Music"/>
+                                                <segment title="Software"/>
+                                                <segment title="E-books"/>
+                                            </segments>
+                                            <connections>
+                                                <action selector="segmentedChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Ecx-N4-Ezv"/>
+                                            </connections>
+                                        </segmentedControl>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="vVI-NQ-XoR" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="8fH-Ka-cC4"/>
                             <constraint firstItem="73R-yL-kZh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="MNT-wA-c1C"/>
+                            <constraint firstItem="Iuq-Ic-tdb" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Qef-DB-N4N"/>
+                            <constraint firstItem="Iuq-Ic-tdb" firstAttribute="top" secondItem="73R-yL-kZh" secondAttribute="bottom" id="Skm-4N-lzq"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="vVI-NQ-XoR" secondAttribute="trailing" id="VBE-xW-Dp3"/>
                             <constraint firstItem="73R-yL-kZh" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="YFm-6J-bzO"/>
+                            <constraint firstItem="Iuq-Ic-tdb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="ZIh-zw-mvN"/>
                             <constraint firstItem="vVI-NQ-XoR" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hNG-Ri-8i7"/>
                             <constraint firstItem="73R-yL-kZh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hzr-Eh-ui3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="vVI-NQ-XoR" secondAttribute="bottom" id="rHS-Wq-srV"/>
@@ -46,6 +70,7 @@
                     </view>
                     <connections>
                         <outlet property="searchBar" destination="73R-yL-kZh" id="S6u-Yo-4nY"/>
+                        <outlet property="segmentedControl" destination="q8m-w4-2X2" id="xy6-fo-9sM"/>
                         <outlet property="tableView" destination="vVI-NQ-XoR" id="OWV-rx-TFY"/>
                     </connections>
                 </viewController>
