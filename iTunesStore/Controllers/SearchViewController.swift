@@ -33,7 +33,7 @@ extension SearchViewController: UISearchBarDelegate {
             
             dataTask?.cancel()
             isLoading = true
-            tableView.reloadData()
+            searchTableView.reloadData()
             
             hasSearched = true
             searchResults = []
@@ -63,7 +63,7 @@ extension SearchViewController: UISearchBarDelegate {
                         self.searchResults.sort(by: <)
                         DispatchQueue.main.async {
                             self.isLoading = false
-                            self.tableView.reloadData()
+                            self.searchTableView.reloadData()
                         }
                         return
                     }
@@ -73,7 +73,7 @@ extension SearchViewController: UISearchBarDelegate {
                 DispatchQueue.main.async {
                     self.hasSearched = false
                     self.isLoading = false
-                    self.tableView.reloadData()
+                    self.searchTableView.reloadData()
                     self.showNetworkError()
                 }
             })
@@ -91,11 +91,12 @@ extension SearchViewController: UISearchBarDelegate {
 
 // MARK: - TableView Setup
 
-extension SearchViewController: UITableViewDataSource {
+extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: Constants.detailVCIdentifier, sender: indexPath)
     }
-    
+     
     func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
         if searchResults.count == 0 || isLoading {
             return nil
@@ -103,7 +104,7 @@ extension SearchViewController: UITableViewDataSource {
             return indexPath
         }
     }
-    
+     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if isLoading {
             let cell = tableView.dequeueReusableCell(
@@ -133,7 +134,7 @@ extension SearchViewController: UITableViewDataSource {
 class SearchViewController: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchTableView: UITableView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     
     private var hasSearched = false
@@ -203,7 +204,7 @@ class SearchViewController: UIViewController {
             nibName: Constants.searchResultCell,
             bundle: nil
         )
-        tableView.register(
+        searchTableView.register(
             cellNib,
             forCellReuseIdentifier: Constants.searchResultCell
         )
@@ -211,7 +212,7 @@ class SearchViewController: UIViewController {
             nibName: Constants.nothingFoundCell,
             bundle: nil
         )
-        tableView.register(
+        searchTableView.register(
             cellNib,
             forCellReuseIdentifier: Constants.nothingFoundCell
         )
@@ -219,7 +220,7 @@ class SearchViewController: UIViewController {
             nibName: Constants.loadingCell,
             bundle: nil
         )
-        tableView.register(
+        searchTableView.register(
             cellNib, forCellReuseIdentifier:
                 Constants.loadingCell
         )
@@ -228,7 +229,7 @@ class SearchViewController: UIViewController {
     private func setupTableView() {
         ///# Это указывает tableView добавить 64-точечное поле сверху - 20 точек для строки состояния и 44 точки для строки поиска.
         ///# Теперь первая строка всегда будет видна, а при прокрутке представления таблицы ячейки все равно попадают под строку поиска.
-        tableView.contentInset = UIEdgeInsets(
+        searchTableView.contentInset = UIEdgeInsets(
             top: 108, left: 0,
             bottom: 0, right: 0
         )
