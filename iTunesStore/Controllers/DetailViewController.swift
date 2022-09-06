@@ -6,6 +6,12 @@
 //
 
 import UIKit
+ 
+extension DetailViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+        return (touch.view === self.view)
+    }
+}
 
 extension DetailViewController: UIViewControllerTransitioningDelegate {
     ///# Методы из этого протокола делегата сообщают `UIKit`, какие объекты он должен использовать для
@@ -24,9 +30,19 @@ extension DetailViewController: UIViewControllerTransitioningDelegate {
 
 class DetailViewController: UIViewController {
 
+    @IBOutlet weak var popupView: UIView!
+    @IBOutlet weak var artworkImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var artistNameLabel: UILabel!
+    @IBOutlet weak var kindLabel: UILabel!
+    @IBOutlet weak var genreLabel: UILabel!
+    @IBOutlet weak var priceButton: UIButton!
+     
     override func viewDidLoad() {
         super.viewDidLoad()
  
+        view.tintColor = UIColor(red: 20/255, green: 160/225, blue: 160/255, alpha: 1)
+        popupView.layer.cornerRadius = 12
     }
     
     ///# Вызывается для загрузки `viewController'a` из раскадровки
@@ -36,17 +52,7 @@ class DetailViewController: UIViewController {
         modalPresentationStyle = .custom
         transitioningDelegate = self
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
+ 
     @IBAction func close(_ sender: UIButton) {
         dismiss(animated: true)
     }
