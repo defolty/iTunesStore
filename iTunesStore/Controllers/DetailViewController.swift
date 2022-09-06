@@ -28,6 +28,12 @@ extension DetailViewController: UIViewControllerTransitioningDelegate {
             presenting: presenting
         )
     }
+    
+    func animationController(forPresented presented:
+                             UIViewController, presenting: UIViewController,
+                             source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return BounceAnimationController()
+    }
 }
 
 class DetailViewController: UIViewController {
