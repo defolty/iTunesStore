@@ -22,6 +22,7 @@
 		FBBC4E7D28C5467E0033AB6D /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E7C28C5467E0033AB6D /* UIImageView+Extension.swift */; };
 		FBBC4E8128C7785B0033AB6D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E8028C7785B0033AB6D /* DetailViewController.swift */; };
 		FBBC4E8328C77C5F0033AB6D /* DimmingPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E8228C77C5F0033AB6D /* DimmingPresentationController.swift */; };
+		FBBC4E8528C7B6D10033AB6D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E8428C7B6D10033AB6D /* GradientView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		FBBC4E7C28C5467E0033AB6D /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		FBBC4E8028C7785B0033AB6D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		FBBC4E8228C77C5F0033AB6D /* DimmingPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimmingPresentationController.swift; sourceTree = "<group>"; };
+		FBBC4E8428C7B6D10033AB6D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 				FBBC4E7C28C5467E0033AB6D /* UIImageView+Extension.swift */,
 				FBBC4E7728C507E00033AB6D /* Constants.swift */,
 				FBBC4E7928C511A50033AB6D /* Archive.swift */,
+				FBBC4E8428C7B6D10033AB6D /* GradientView.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 			files = (
 				FBBC4E8128C7785B0033AB6D /* DetailViewController.swift in Sources */,
 				FBBC4E8328C77C5F0033AB6D /* DimmingPresentationController.swift in Sources */,
+				FBBC4E8528C7B6D10033AB6D /* GradientView.swift in Sources */,
 				FBBC4E5228C1F3D10033AB6D /* SearchViewController.swift in Sources */,
 				FBBC4E4E28C1F3D10033AB6D /* AppDelegate.swift in Sources */,
 				FBBC4E7D28C5467E0033AB6D /* UIImageView+Extension.swift in Sources */,

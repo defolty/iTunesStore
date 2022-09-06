@@ -115,6 +115,7 @@ class DetailViewController: UIViewController {
     }
     
     private func setupViews() {
+        view.backgroundColor = UIColor.clear
         view.tintColor = UIColor(red: 20/255, green: 160/225, blue: 160/255, alpha: 1)
         popupView.layer.cornerRadius = 12
         artworkImageView.layer.cornerRadius = 8
