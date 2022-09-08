@@ -150,6 +150,23 @@ class SearchViewController: UIViewController {
         registerCells()
         setupTableView()
     }
+    
+    ///# The horizontal/vertical size class 
+    ///# The display scale — is this a Retina screen or not?
+    ///# The user interface idiom — is this an iPhone or iPad?
+    ///# The preferred Dynamic Type font size
+    override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.willTransition(to: newCollection, with: coordinator)
+        
+        switch newCollection.verticalSizeClass {
+        case .compact:
+            showLandscape(with: coordinator)
+        case .regular, .unspecified:
+            hideLandscape(with: coordinator)
+        @unknown default:
+            fatalError()
+        }
+    }
      
     private func parse(data: Data) -> [SearchResult] {
         do {
