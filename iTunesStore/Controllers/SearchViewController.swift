@@ -170,7 +170,7 @@ class SearchViewController: UIViewController {
     }
     
     func showLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
-        ///# If it should happen that `landscapeVC` is not `nil`,  then you’re already showing the landscape view and you simply return right away.
+        ///# Не должно происходить так, чтобы приложение создавало второе `view landscape`, когда другое уже представлено
         guard landscapeVC == nil else {
             return
         }
@@ -181,13 +181,41 @@ class SearchViewController: UIViewController {
             ///# Определяем размер и положение нового контроллера представления.
             ///# В результате `view LandscapeViewController` станет таким же большим,
             ///# как и контроллер `SearchViewController`, занимая весь экран
-            controller.view.frame = view.bounds
             ///# `frame` - это прямоугольник, который описывает положение и размер представления с точки зрения его `superview`
             ///# Чтобы переместить `view` в его конечное положение и размер, обычно устанавливается его `frame`
             ///# `bounds` - это тоже прямоугольник, но видимый изнутри представления
+            controller.view.frame = view.bounds
+            controller.view.alpha = 0
+            ///# Поскольку представление `SearchViewController` является здесь `superview`,
+            ///# `frame` ландшафтного представления должна быть сделана равной `bounds SearchViewController`
             view.addSubview(controller.view)
             addChild(controller)
-            controller.didMove(toParent: self)
+            
+            ///# `animate(alongsideTransition:completion:)` принимает два закрытия:
+            ///# первое - для самой анимации,
+            ///# второе - `completion`, который вызывается после завершения анимации
+            ///# и который дает вам возможность отложить вызов didMove(toParent:) до окончания анимации
+            coordinator.animate(alongsideTransition: { _ in
+                controller.view.alpha = 1
+            }, completion: { _ in
+                controller.didMove(toParent: self)
+            })
+            ///# Не удаляем `view` и `vc`, пока анимация не будет полностью завершена
+        }
+    }
+    
+    func hideLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        if let controller = landscapeVC {
+            ///# Сначала `willMove(toParent:)`, чтобы сообщить контроллеру представления
+            ///# что он покидает иерархию `viewController's` и у него больше нет родителя
+            controller.willMove(toParent: nil)
+            coordinator.animate(alongsideTransition: { _ in
+                controller.view.alpha = 0
+            }, completion: { _ in
+                controller.view.removeFromSuperview()
+                controller.removeFromParent()
+                self.landscapeVC = nil
+            })
         }
     }
      
