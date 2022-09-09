@@ -67,7 +67,7 @@ class DetailViewController: UIViewController {
         downloadTask?.cancel()
     }
     
-    ///# Вызывается для загрузки `viewController'a` из раскадровки
+    ///# Вызывается для загрузки `viewController'a` из `storyboard'a`
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         

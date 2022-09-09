@@ -13,11 +13,17 @@ class GradientView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
+        ///# Это говорит `view`, что оно должно пропорционально изменять свою ширину и высоту,
+        ///# когдa `superview`, к которому оно принадлежит, изменяет размеры из-за поворота или по какой-либо другой причине
+        autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         backgroundColor = UIColor.clear
+        ///# Это говорит `view`, что оно должно пропорционально изменять свою ширину и высоту,
+        ///# когдa `superview`, к которому оно принадлежит, изменяет размеры из-за поворота или по какой-либо другой причине
+        autoresizingMask = [.flexibleWidth, .flexibleHeight]
     }
      
 /** Сначала создаём два массива, которые содержат "цветовые границы" для градиента.
@@ -27,7 +33,7 @@ class GradientView: UIView {
     которая представляет собой окружность круга градиента.
     Note: В `UIKit`, а также в `Core Graphics`, цвета и значения непрозрачности не идут от 0 до 255, а являются дробными значениями от 0,0 до 1,0.
     Значения 0 и 1 из массива `locations` представляют собой проценты: 0% и 100%, соответственно.
-    Если у нас более двух цветов, вы можете указать проценты того, где в градиенте вы хотите разместить эти цвета. */
+    Если у нас более двух цветов, вы можете указать проценты того, где в градиенте вы хотите разместить эти цвета */
     override func draw(_ rect: CGRect) {
         let components: [CGFloat] = [ 0, 0, 0, 0.3, 0, 0, 0, 0.7 ]
         let locations: [CGFloat] = [ 0, 1 ]
