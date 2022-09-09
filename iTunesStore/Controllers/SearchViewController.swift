@@ -140,6 +140,7 @@ class SearchViewController: UIViewController {
     private var hasSearched = false
     private var isLoading = false
     private var dataTask: URLSessionDataTask?
+    var landscapeVC: LandscapeViewController?
     
     private var searchResults = [SearchResult]()
     
@@ -151,7 +152,7 @@ class SearchViewController: UIViewController {
         setupTableView()
     }
     
-    ///# The horizontal/vertical size class 
+    ///# The horizontal/vertical size class
     ///# The display scale — is this a Retina screen or not?
     ///# The user interface idiom — is this an iPhone or iPad?
     ///# The preferred Dynamic Type font size
@@ -165,6 +166,28 @@ class SearchViewController: UIViewController {
             hideLandscape(with: coordinator)
         @unknown default:
             fatalError()
+        }
+    }
+    
+    func showLandscape(with coordinator: UIViewControllerTransitionCoordinator) {
+        ///# If it should happen that `landscapeVC` is not `nil`,  then you’re already showing the landscape view and you simply return right away.
+        guard landscapeVC == nil else {
+            return
+        }
+        landscapeVC = storyboard!.instantiateViewController(
+            withIdentifier: Constants.landscapeVCIdentifier
+        ) as? LandscapeViewController
+        if let controller = landscapeVC {
+            ///# Определяем размер и положение нового контроллера представления.
+            ///# В результате `view LandscapeViewController` станет таким же большим,
+            ///# как и контроллер `SearchViewController`, занимая весь экран
+            controller.view.frame = view.bounds
+            ///# `frame` - это прямоугольник, который описывает положение и размер представления с точки зрения его `superview`
+            ///# Чтобы переместить `view` в его конечное положение и размер, обычно устанавливается его `frame`
+            ///# `bounds` - это тоже прямоугольник, но видимый изнутри представления
+            view.addSubview(controller.view)
+            addChild(controller)
+            controller.didMove(toParent: self)
         }
     }
      

@@ -10,5 +10,6 @@ struct Constants {
     static let nothingFoundCell = "NothingFoundCell"
     static let loadingCell = "LoadingCell"
     static let detailVCIdentifier = "ShowModal"
+    static let landscapeVCIdentifier = "LandscapeViewController"
 }
 
