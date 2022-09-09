@@ -112,7 +112,7 @@
 		FBBC4E6928C23D240033AB6D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				FBBC4E7628C3D5B80033AB6D /* ActivitiIndicator */,
+				FBBC4E7628C3D5B80033AB6D /* ActivityIndicator */,
 				FBBC4E6D28C242600033AB6D /* SearchResultCell */,
 				FBBC4E7028C242770033AB6D /* NothingFoundCell */,
 			);
@@ -154,12 +154,12 @@
 			path = NothingFoundCell;
 			sourceTree = "<group>";
 		};
-		FBBC4E7628C3D5B80033AB6D /* ActivitiIndicator */ = {
+		FBBC4E7628C3D5B80033AB6D /* ActivityIndicator */ = {
 			isa = PBXGroup;
 			children = (
 				FBBC4E7428C3D5B00033AB6D /* LoadingCell.xib */,
 			);
-			path = ActivitiIndicator;
+			path = ActivityIndicator;
 			sourceTree = "<group>";
 		};
 		FBBC4E7B28C5460C0033AB6D /* Helpers */ = {
