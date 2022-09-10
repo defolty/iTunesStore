@@ -17,6 +17,28 @@ extension LandscapeViewController: UIScrollViewDelegate {
     }
 }
 
+extension LandscapeViewController {
+    private func downloadImage(for searchResult: SearchResult, andPlaceOn button: UIButton) {
+        if let url = URL(string: searchResult.imageSmall) {
+            let task = URLSession.shared.downloadTask(with: url) {
+                [weak button] url, response, error in
+                
+                if error == nil, let url = url,
+                    let data = try? Data(contentsOf: url),
+                   let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        if let button = button {
+                            button.setImage(image, for: .normal)
+                        }
+                    }
+                }
+            }
+            task.resume()
+            downloads.append(task)
+        }
+    }
+}
+
 class LandscapeViewController: UIViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
@@ -24,6 +46,7 @@ class LandscapeViewController: UIViewController {
     
     var searchResults = [SearchResult]()
     private var firstTime = true
+    private var downloads = [URLSessionDownloadTask]() // все активные объекты URLSessionDownloadTask
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +69,13 @@ class LandscapeViewController: UIViewController {
         if firstTime {
             firstTime = false
             tileButtons(searchResults)
+        }
+    }
+    
+    deinit {
+        print("deinit \(self)")
+        for task in downloads {
+            task.cancel()
         }
     }
      
@@ -100,14 +130,13 @@ class LandscapeViewController: UIViewController {
         var row = 0
         var column = 0
         var x = marginX
-        for (index, result) in searchResults.enumerated() {
-            print(type(of: result)) // to delete
-            ///# Создаём объект UIButton. В целях отладки даём каждой кнопке заголовок с индексом массива
+        for (_, result) in searchResults.enumerated() {
+            ///# Создаём объект `UIButton`. В целях отладки даём каждой кнопке заголовок с индексом массива
             ///# Если в поиске есть 200 результатов, то в итоге у нас также должно быть 200 кнопок
             ///# Установка индекса на кнопку поможет в этом убедиться
-            let button = UIButton(type: .system)
-            button.backgroundColor = UIColor.white
-            button.setTitle("\(index)", for: .normal)
+            let button = UIButton(type: .custom)
+            button.setBackgroundImage((UIImage(named: "LandscapeButton")), for: .normal)
+            downloadImage(for: result, andPlaceOn: button)
             ///# При создании кнопки вручную, всегда нужно установить её `frame`
             ///# Используя измерения, которые мы выяснили ранее, определить положение и размер кнопки
             ///# Все свойства `CGRect` - это `CGFloat`, но `row` - это `Int`
