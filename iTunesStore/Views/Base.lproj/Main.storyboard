@@ -215,24 +215,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AqT-NP-cfU">
-                                <rect key="frame" x="186" y="437.5" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="SGb-lJ-Ykn">
+                                <rect key="frame" x="149" y="833" width="116" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="pageChanged:" destination="LeP-Et-sXI" eventType="valueChanged" id="byT-hy-TLh"/>
+                                </connections>
+                            </pageControl>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MZa-Z5-ewp">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="hPO-cJ-vVq"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="nfT-v3-KZT"/>
+                                <connections>
+                                    <outlet property="delegate" destination="LeP-Et-sXI" id="pD1-m0-S3j"/>
+                                </connections>
+                            </scrollView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5j4-gd-XYj"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="AqT-NP-cfU" firstAttribute="centerX" secondItem="KjL-1T-UoY" secondAttribute="centerX" id="1ph-XB-sYD"/>
-                            <constraint firstItem="AqT-NP-cfU" firstAttribute="centerY" secondItem="KjL-1T-UoY" secondAttribute="centerY" id="21M-bD-6Fg"/>
-                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="pageControl" destination="SGb-lJ-Ykn" id="KrI-d1-lzh"/>
+                        <outlet property="scrollView" destination="MZa-Z5-ewp" id="0hk-e0-pgs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dgw-Bj-E1G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1797" y="110"/>
+            <point key="canvasLocation" x="1797.1014492753625" y="109.82142857142857"/>
         </scene>
     </scenes>
     <resources>

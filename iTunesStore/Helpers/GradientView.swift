@@ -37,17 +37,16 @@ class GradientView: UIView {
     override func draw(_ rect: CGRect) {
         let components: [CGFloat] = [ 0, 0, 0, 0.3, 0, 0, 0, 0.7 ]
         let locations: [CGFloat] = [ 0, 1 ]
-        // 2
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let gradient = CGGradient(colorSpace: colorSpace,
-                                  colorComponents: components,
-                                  locations: locations, count: 2)
-        // 3
+        let gradient = CGGradient(
+            colorSpace: colorSpace,
+            colorComponents: components,
+            locations: locations, count: 2
+        )
         let x = bounds.midX
         let y = bounds.midY
         let centerPoint = CGPoint(x: x, y : y)
         let radius = max(x, y)
-        // 4
         let context = UIGraphicsGetCurrentContext()
         context?.drawRadialGradient(
             gradient!,

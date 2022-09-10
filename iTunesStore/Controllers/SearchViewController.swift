@@ -178,6 +178,7 @@ class SearchViewController: UIViewController {
             withIdentifier: Constants.landscapeVCIdentifier
         ) as? LandscapeViewController
         if let controller = landscapeVC {
+            controller.searchResults = searchResults
             ///# Определяем размер и положение нового контроллера представления.
             ///# В результате `view LandscapeViewController` станет таким же большим,
             ///# как и контроллер `SearchViewController`, занимая весь экран
