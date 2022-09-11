@@ -8,26 +8,50 @@
 import Foundation
 
 class Search {
-    var searchResults: [SearchResult] = []
-    var hasSearched = false
-    var isLoading = false
     
+    private(set) var state: State = .notSearchedYet /// read only
     private var dataTask: URLSessionDataTask? = nil
     typealias SearchComplete = (Bool) -> Void
     
-    func performSearch(for text: String, category: Int, completion: @escaping SearchComplete) {
+    enum State {
+        case notSearchedYet /// also as error
+        case loading
+        case noResults
+        case results([SearchResult])
+        ///# associated value — an array of `SearchResult` objects
+        ///# Этот массив имеет значение только в случае успешного поиска.
+        ///# Во всех остальных случаях результатов поиска нет, и массив пуст.
+        ///# Сделав его associated, мы будем иметь доступ к этому массиву только тогда,
+        ///# когда `Search` находится в состоянии `.results`
+        ///# В других состояниях массив просто не существует
+    }
+    
+    enum Category: Int {
+        case all = 0
+        case music = 1
+        case software = 2
+        case ebooks = 4
+        
+        var type: String {
+            switch self {
+            case .all: return ""
+            case .music: return "musicTrack"
+            case .software: return "software"
+            case .ebooks: return "ebook"
+            }
+        }
+    }
+    
+    func performSearch(for text: String, category: Category, completion: @escaping SearchComplete) {
         if !text.isEmpty {
             dataTask?.cancel()
             
-            isLoading = true
-            hasSearched = true
-            searchResults = []
-            
+            state = .loading
             let url = iTunesURL(searchText: text, category: category)
-            
             let session = URLSession.shared
             dataTask = session.dataTask(with: url, completionHandler: { data, response, error in
                 var success = false
+                var newState = State.notSearchedYet
                 
                 if let error = error as NSError?, error.code == -999 {
                     return
@@ -35,20 +59,18 @@ class Search {
                 
                 if let httpResponse = response as? HTTPURLResponse,
                    httpResponse.statusCode == 200, let data = data {
-                    self.searchResults = self.parse(data: data)
-                    self.searchResults.sort(by: <)
-                    
-                    print("Success!")
-                    self.isLoading = false
+                    var searchResults = self.parse(data: data)
+                    if searchResults.isEmpty {
+                        newState = .noResults
+                    } else {
+                        searchResults.sort(by: <)
+                        newState = .results(searchResults)
+                    }
                     success = true
                 }
                 
-                if !success {
-                    self.hasSearched = false
-                    self.isLoading = false
-                }
-               
                 DispatchQueue.main.async {
+                    self.state = newState
                     completion(success)
                 }
             })
@@ -69,14 +91,8 @@ class Search {
         }
     }
     
-    private func iTunesURL(searchText: String, category: Int) -> URL {
-        let kind: String
-        switch category {
-        case 1: kind = "musicTrack"
-        case 2: kind = "software"
-        case 3: kind = "ebook"
-        default: kind = ""
-        }
+    private func iTunesURL(searchText: String, category: Category) -> URL {
+        let kind = category.type
         
         let encodedText = searchText.addingPercentEncoding(
             withAllowedCharacters: CharacterSet.urlQueryAllowed
