@@ -44,9 +44,9 @@ class LandscapeViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageControl: UIPageControl!
     
-    var searchResults = [SearchResult]()
     private var firstTime = true
-    private var downloads = [URLSessionDownloadTask]() // все активные объекты URLSessionDownloadTask
+    private var downloads = [URLSessionDownloadTask]() /// все активные объекты `URLSessionDownloadTask`
+    var search: Search!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,9 +66,20 @@ class LandscapeViewController: UIViewController {
             width: safeFrame.size.width,
             height: pageControl.frame.size.height
         )
+        
         if firstTime {
             firstTime = false
-            tileButtons(searchResults)
+            
+            switch search.state {
+            case .notSearchedYet:
+                break
+            case .loading:
+                showSpinner()
+            case .noResults:
+                showNothingFoundLabel()
+            case .results(let list):
+                tileButtons(list)
+            }
         }
     }
     
@@ -130,12 +141,15 @@ class LandscapeViewController: UIViewController {
         var row = 0
         var column = 0
         var x = marginX
-        for (_, result) in searchResults.enumerated() {
+        for (index, result) in searchResults.enumerated() {
             ///# Создаём объект `UIButton`. В целях отладки даём каждой кнопке заголовок с индексом массива
             ///# Если в поиске есть 200 результатов, то в итоге у нас также должно быть 200 кнопок
             ///# Установка индекса на кнопку поможет в этом убедиться
             let button = UIButton(type: .custom)
             button.setBackgroundImage((UIImage(named: "LandscapeButton")), for: .normal)
+            button.tag = 2000 + index
+            button.addTarget(self, action: #selector(buttonPressed),
+                             for: .touchUpInside)
             downloadImage(for: result, andPlaceOn: button)
             ///# При создании кнопки вручную, всегда нужно установить её `frame`
             ///# Используя измерения, которые мы выяснили ранее, определить положение и размер кнопки
@@ -177,14 +191,37 @@ class LandscapeViewController: UIViewController {
         pageControl.currentPage = 0
     }
      
-    private func setupViews() {
-        view.removeConstraints(view.constraints)
-        view.translatesAutoresizingMaskIntoConstraints = true
-        pageControl.removeConstraints(pageControl.constraints)
-        pageControl.translatesAutoresizingMaskIntoConstraints = true
-        pageControl.numberOfPages = 0
-        scrollView.removeConstraints(scrollView.constraints)
-        scrollView.translatesAutoresizingMaskIntoConstraints = true
+    private func showNothingFoundLabel() {
+        let label = UILabel(frame: CGRect.zero)
+        label.text = "Nothing Found"
+        label.textColor = UIColor.white
+        label.backgroundColor = UIColor.clear
+        
+        label.sizeToFit()
+        
+        var rect = label.frame
+        rect.size.width = ceil(rect.size.width / 2) * 2 /// `ceil()` округляет 5,5 до 6
+        rect.size.height = ceil(rect.size.height / 2) * 2
+        label.frame = rect
+        
+        label.center = CGPoint(
+            x: scrollView.bounds.midX,
+            y: scrollView.bounds.midY
+        )
+        view.addSubview(label)
+    }
+    
+    func searchResultsReceived() {
+        hideSpinner()
+        
+        switch search.state {
+        case .notSearchedYet, .loading:
+            break
+        case .noResults:
+            showNothingFoundLabel()
+        case .results(let list):
+            tileButtons(list)
+        }
     }
     
     @IBAction func pageChanged(_ sender: UIPageControl) {
@@ -198,4 +235,44 @@ class LandscapeViewController: UIViewController {
             )
         }, completion: nil)
     }
+    
+    @objc func buttonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: Constants.detailVCIdentifier, sender: sender)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.detailVCIdentifier {
+            if case .results(let list) = search.state {
+                let detailViewController = segue.destination
+                as! DetailViewController
+                let searchResult = list[(sender as! UIButton).tag - 2000]
+                detailViewController.searchResult = searchResult
+            }
+        }
+    }
+    
+    private func showSpinner() {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.center = CGPoint(
+            x: scrollView.bounds.midX + 0.5,
+            y: scrollView.bounds.midY + 0.5
+        )
+        spinner.tag = 1000
+        view.addSubview(spinner)
+        spinner.startAnimating()
+    }
+    
+    private func hideSpinner() {
+        view.viewWithTag(1000)?.removeFromSuperview()
+    }
+    
+    private func setupViews() {
+        view.removeConstraints(view.constraints)
+        view.translatesAutoresizingMaskIntoConstraints = true
+        pageControl.removeConstraints(pageControl.constraints)
+        pageControl.translatesAutoresizingMaskIntoConstraints = true
+        pageControl.numberOfPages = 0
+        scrollView.removeConstraints(scrollView.constraints)
+        scrollView.translatesAutoresizingMaskIntoConstraints = true
+    } 
 }

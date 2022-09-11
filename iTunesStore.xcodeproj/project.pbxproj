@@ -26,6 +26,8 @@
 		FBBC4E8928C7C0E40033AB6D /* SlideOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E8828C7C0E40033AB6D /* SlideOutAnimationController.swift */; };
 		FBBC4E8B28CA87C30033AB6D /* LandscapeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E8A28CA87C30033AB6D /* LandscapeViewController.swift */; };
 		FBBC4E8D28CCBFF40033AB6D /* FadeOutAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E8C28CCBFF40033AB6D /* FadeOutAnimationController.swift */; };
+		FBBC4E9228CCED7E0033AB6D /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E9128CCED7E0033AB6D /* Search.swift */; };
+		FBBC4E9428CCF3970033AB6D /* Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E9328CCF3970033AB6D /* Delete.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		FBBC4E8828C7C0E40033AB6D /* SlideOutAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideOutAnimationController.swift; sourceTree = "<group>"; };
 		FBBC4E8A28CA87C30033AB6D /* LandscapeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeViewController.swift; sourceTree = "<group>"; };
 		FBBC4E8C28CCBFF40033AB6D /* FadeOutAnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FadeOutAnimationController.swift; sourceTree = "<group>"; };
+		FBBC4E9128CCED7E0033AB6D /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		FBBC4E9328CCF3970033AB6D /* Delete.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delete.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +176,8 @@
 				FBBC4E7728C507E00033AB6D /* Constants.swift */,
 				FBBC4E8428C7B6D10033AB6D /* GradientView.swift */,
 				FBBC4E8228C77C5F0033AB6D /* DimmingPresentationController.swift */,
+				FBBC4E9128CCED7E0033AB6D /* Search.swift */,
+				FBBC4E9328CCF3970033AB6D /* Delete.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -269,8 +275,10 @@
 				FBBC4E5028C1F3D10033AB6D /* SceneDelegate.swift in Sources */,
 				FBBC4E6228C21F620033AB6D /* SearchModel.swift in Sources */,
 				FBBC4E6728C23C9F0033AB6D /* SearchResultCell.swift in Sources */,
+				FBBC4E9428CCF3970033AB6D /* Delete.swift in Sources */,
 				FBBC4E8B28CA87C30033AB6D /* LandscapeViewController.swift in Sources */,
 				FBBC4E7828C507E00033AB6D /* Constants.swift in Sources */,
+				FBBC4E9228CCED7E0033AB6D /* Search.swift in Sources */,
 				FBBC4E8728C7BC980033AB6D /* BounceAnimationController.swift in Sources */,
 				FBBC4E8928C7C0E40033AB6D /* SlideOutAnimationController.swift in Sources */,
 			);

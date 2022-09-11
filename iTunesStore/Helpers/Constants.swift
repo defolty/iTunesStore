@@ -9,7 +9,7 @@ struct Constants {
     static let searchResultCell = "SearchResultCell"
     static let nothingFoundCell = "NothingFoundCell"
     static let loadingCell = "LoadingCell"
-    static let detailVCIdentifier = "ShowModal"
+    static let detailVCIdentifier = "ShowDetail"
     static let landscapeVCIdentifier = "LandscapeViewController"
 }
 
