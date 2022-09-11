@@ -72,12 +72,12 @@
                         <outlet property="searchBar" destination="73R-yL-kZh" id="S6u-Yo-4nY"/>
                         <outlet property="searchTableView" destination="vVI-NQ-XoR" id="OWV-rx-TFY"/>
                         <outlet property="segmentedControl" destination="q8m-w4-2X2" id="xy6-fo-9sM"/>
-                        <segue destination="ccT-Zc-IeO" kind="presentation" identifier="ShowModal" id="tCf-pP-wTK"/>
+                        <segue destination="ccT-Zc-IeO" kind="presentation" identifier="ShowDetail" id="tCf-pP-wTK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="122" y="110"/>
+            <point key="canvasLocation" x="41" y="-196"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="cly-R1-tiI">
@@ -238,13 +238,17 @@
                     <connections>
                         <outlet property="pageControl" destination="SGb-lJ-Ykn" id="KrI-d1-lzh"/>
                         <outlet property="scrollView" destination="MZa-Z5-ewp" id="0hk-e0-pgs"/>
+                        <segue destination="ccT-Zc-IeO" kind="presentation" identifier="ShowDetail" id="zmH-oO-Gas"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dgw-Bj-E1G" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1797.1014492753625" y="109.82142857142857"/>
+            <point key="canvasLocation" x="41" y="540"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="zmH-oO-Gas"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="CloseButton" width="15" height="15"/>
         <image name="PriceButton" width="11" height="24"/>

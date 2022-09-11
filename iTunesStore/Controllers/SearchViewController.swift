@@ -36,6 +36,7 @@ extension SearchViewController: UISearchBarDelegate {
                     self.showNetworkError()
                 }
                 self.searchTableView.reloadData()
+                self.landscapeVC?.searchResultsReceived()
             })
             searchTableView.reloadData()
             searchBar.resignFirstResponder()
@@ -177,6 +178,7 @@ class SearchViewController: UIViewController {
             controller.willMove(toParent: nil)
             coordinator.animate(alongsideTransition: { _ in
                 controller.view.alpha = 0
+                self.dismiss(animated: true, completion: nil)
             }, completion: { _ in
                 controller.view.removeFromSuperview()
                 controller.removeFromParent()
@@ -184,7 +186,7 @@ class SearchViewController: UIViewController {
             })
         }
     }
-      
+    
     private func showNetworkError() {
         let alert = UIAlertController(
             title: "Whoops...",
