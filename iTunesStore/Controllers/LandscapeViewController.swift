@@ -191,6 +191,68 @@ class LandscapeViewController: UIViewController {
         pageControl.currentPage = 0
     }
      
+    @IBAction func pageChanged(_ sender: UIPageControl) {
+        UIView.animate(withDuration: 0.3,
+                       delay: 0,
+                       options: [.curveEaseInOut],
+                       animations: {
+            self.scrollView.contentOffset = CGPoint(
+                x: self.scrollView.bounds.size.width * CGFloat(sender.currentPage),
+                y: 0
+            )
+        }, completion: nil)
+    }
+    
+    @objc func buttonPressed(_ sender: UIButton) {
+        performSegue(withIdentifier: Constants.detailVCIdentifier, sender: sender)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == Constants.detailVCIdentifier {
+            if case .results(let list) = search.state {
+                let detailViewController = segue.destination
+                as! DetailViewController
+                let searchResult = list[(sender as! UIButton).tag - 2000]
+                detailViewController.searchResult = searchResult
+            }
+        }
+    }
+    
+    private func setupViews() {
+        view.removeConstraints(view.constraints)
+        view.translatesAutoresizingMaskIntoConstraints = true
+        pageControl.removeConstraints(pageControl.constraints)
+        pageControl.translatesAutoresizingMaskIntoConstraints = true
+        pageControl.numberOfPages = 0
+        scrollView.removeConstraints(scrollView.constraints)
+        scrollView.translatesAutoresizingMaskIntoConstraints = true
+    } 
+}
+
+// MARK: - Spinner Methods
+
+extension LandscapeViewController {
+    
+    private func showSpinner() {
+        let spinner = UIActivityIndicatorView(style: .large)
+        spinner.center = CGPoint(
+            x: scrollView.bounds.midX + 0.5,
+            y: scrollView.bounds.midY + 0.5
+        )
+        spinner.tag = 1000
+        view.addSubview(spinner)
+        spinner.startAnimating()
+    }
+    
+    private func hideSpinner() {
+        view.viewWithTag(1000)?.removeFromSuperview()
+    }
+}
+
+// MARK: - Results Methods
+
+extension LandscapeViewController {
+    
     private func showNothingFoundLabel() {
         let label = UILabel(frame: CGRect.zero)
         label.text = "Nothing Found"
@@ -223,56 +285,4 @@ class LandscapeViewController: UIViewController {
             tileButtons(list)
         }
     }
-    
-    @IBAction func pageChanged(_ sender: UIPageControl) {
-        UIView.animate(withDuration: 0.3,
-                       delay: 0,
-                       options: [.curveEaseInOut],
-                       animations: {
-            self.scrollView.contentOffset = CGPoint(
-                x: self.scrollView.bounds.size.width * CGFloat(sender.currentPage),
-                y: 0
-            )
-        }, completion: nil)
-    }
-    
-    @objc func buttonPressed(_ sender: UIButton) {
-        performSegue(withIdentifier: Constants.detailVCIdentifier, sender: sender)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == Constants.detailVCIdentifier {
-            if case .results(let list) = search.state {
-                let detailViewController = segue.destination
-                as! DetailViewController
-                let searchResult = list[(sender as! UIButton).tag - 2000]
-                detailViewController.searchResult = searchResult
-            }
-        }
-    }
-    
-    private func showSpinner() {
-        let spinner = UIActivityIndicatorView(style: .large)
-        spinner.center = CGPoint(
-            x: scrollView.bounds.midX + 0.5,
-            y: scrollView.bounds.midY + 0.5
-        )
-        spinner.tag = 1000
-        view.addSubview(spinner)
-        spinner.startAnimating()
-    }
-    
-    private func hideSpinner() {
-        view.viewWithTag(1000)?.removeFromSuperview()
-    }
-    
-    private func setupViews() {
-        view.removeConstraints(view.constraints)
-        view.translatesAutoresizingMaskIntoConstraints = true
-        pageControl.removeConstraints(pageControl.constraints)
-        pageControl.translatesAutoresizingMaskIntoConstraints = true
-        pageControl.numberOfPages = 0
-        scrollView.removeConstraints(scrollView.constraints)
-        scrollView.translatesAutoresizingMaskIntoConstraints = true
-    } 
 }
