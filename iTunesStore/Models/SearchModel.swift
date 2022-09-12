@@ -15,7 +15,7 @@ import Foundation
     `searchResultB.name` = "Autumn Leaves"
 
     `searchResultA < searchResultB`  // false
-    `searchResultB < searchResultA`  // true
+    `searchResultB < searchResultA`  // true 
  */
 func < (lhs: SearchResult, rhs: SearchResult) -> Bool {
     return lhs.name.localizedStandardCompare(rhs.name) ==
@@ -45,7 +45,7 @@ class SearchResult: Codable, CustomStringConvertible {
     var bookGenre: [String]?
     
     var description: String {
-        return "\nKind: \(kind ?? "Nope kind"), Name: \(name), Artist Name: \(artistName ?? "None")"
+        return NSLocalizedString("\nKind: \(kind ?? "Nope kind"), Name: \(name), Artist Name: \(artistName ?? "None")", comment: "Localized kind: \nKind: \(kind ?? "Nope kind"), Name: \(name), Artist Name: \(artistName ?? "None")")
     }
     
     var name: String {
@@ -72,19 +72,19 @@ class SearchResult: Codable, CustomStringConvertible {
     var type: String {
         let kind = self.kind ?? "audiobook"
         switch kind {
-        case "album": return "Album"
-        case "audiobook": return "Audio Book"
-        case "book": return "Book"
-        case "ebook": return "E-Book"
-        case "feature-movie": return "Movie"
-        case "music-video": return "Music Video"
-        case "podcast": return "Podcast"
-        case "software": return "App"
-        case "song": return "Song"
-        case "tv-episode": return "TV Episode"
+        case "album": return NSLocalizedString("Album", comment: "Localized kind: Album")
+        case "audiobook": return NSLocalizedString("Audio Book", comment: "Localized kind: Audio Book")
+        case "book": return NSLocalizedString("Book", comment: "Localized kind: Book")
+        case "ebook": return NSLocalizedString("E-Book", comment: "Localized kind: E-Book")
+        case "feature-movie": return NSLocalizedString("Movie", comment: "Localized kind: Movie")
+        case "music-video": return NSLocalizedString("Music Video", comment: "Localized kind: Music Video")
+        case "podcast": return NSLocalizedString("Podcast", comment: "Localized kind: Podcast")
+        case "software": return NSLocalizedString("App", comment: "Localized kind: App")
+        case "song": return NSLocalizedString("Song", comment: "Localized kind: Song")
+        case "tv-episode": return NSLocalizedString("TV Episode", comment: "Localized kind: TV Episode")
         default: break
         }
-        return "Unknown"
+        return NSLocalizedString("Unknown", comment: "Localized kind: Unknown")
     }
     
     var artist: String {
@@ -102,3 +102,5 @@ class SearchResult: Codable, CustomStringConvertible {
         case collectionName, collectionViewUrl, collectionPrice
     }
 }
+
+

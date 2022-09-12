@@ -28,6 +28,7 @@
 		FBBC4E9428CCF3970033AB6D /* Delete.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E9328CCF3970033AB6D /* Delete.swift */; };
 		FBBC4E9A28CFBF260033AB6D /* NothingFoundCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBBC4E9C28CFBF260033AB6D /* NothingFoundCell.xib */; };
 		FBBC4E9E28CFCB920033AB6D /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBBC4EA028CFCB920033AB6D /* LoadingCell.xib */; };
+		FBBC4EA728CFD5810033AB6D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FBBC4EA928CFD5810033AB6D /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +58,8 @@
 		FBBC4E9F28CFCB920033AB6D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LoadingCell.xib; sourceTree = "<group>"; };
 		FBBC4EA228CFCC4A0033AB6D /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/LoadingCell.strings; sourceTree = "<group>"; };
 		FBBC4EA428CFCD430033AB6D /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Main.strings; sourceTree = "<group>"; };
+		FBBC4EA828CFD5810033AB6D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FBBC4EAA28CFDC790033AB6D /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +99,7 @@
 				FBBC4E6A28C23D6C0033AB6D /* Models */,
 				FBBC4E6B28C23D730033AB6D /* Controllers */,
 				FBBC4E6828C23D180033AB6D /* Views */,
+				FBBC4EA928CFD5810033AB6D /* Localizable.strings */,
 			);
 			path = iTunesStore;
 			sourceTree = "<group>";
@@ -255,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBBC4E5728C1F3D20033AB6D /* Assets.xcassets in Resources */,
+				FBBC4EA728CFD5810033AB6D /* Localizable.strings in Resources */,
 				FBBC4E9E28CFCB920033AB6D /* LoadingCell.xib in Resources */,
 				FBBC4E6528C228760033AB6D /* SearchResultCell.xib in Resources */,
 				FBBC4E9A28CFBF260033AB6D /* NothingFoundCell.xib in Resources */,
@@ -316,6 +321,15 @@
 				FBBC4EA228CFCC4A0033AB6D /* nl */,
 			);
 			name = LoadingCell.xib;
+			sourceTree = "<group>";
+		};
+		FBBC4EA928CFD5810033AB6D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FBBC4EA828CFD5810033AB6D /* en */,
+				FBBC4EAA28CFDC790033AB6D /* nl */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
