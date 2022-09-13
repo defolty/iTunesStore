@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FB827D7628D108C8007BD833 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FB827D7828D108C8007BD833 /* InfoPlist.strings */; };
 		FBBC4E4E28C1F3D10033AB6D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E4D28C1F3D10033AB6D /* AppDelegate.swift */; };
 		FBBC4E5028C1F3D10033AB6D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E4F28C1F3D10033AB6D /* SceneDelegate.swift */; };
 		FBBC4E5228C1F3D10033AB6D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBBC4E5128C1F3D10033AB6D /* SearchViewController.swift */; };
@@ -32,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FB827D7728D108C8007BD833 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		FB827D7928D108CF007BD833 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FBBC4E4A28C1F3D10033AB6D /* iTunesStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iTunesStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBBC4E4D28C1F3D10033AB6D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FBBC4E4F28C1F3D10033AB6D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -100,6 +103,7 @@
 				FBBC4E6B28C23D730033AB6D /* Controllers */,
 				FBBC4E6828C23D180033AB6D /* Views */,
 				FBBC4EA928CFD5810033AB6D /* Localizable.strings */,
+				FB827D7828D108C8007BD833 /* InfoPlist.strings */,
 			);
 			path = iTunesStore;
 			sourceTree = "<group>";
@@ -259,6 +263,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FBBC4E5728C1F3D20033AB6D /* Assets.xcassets in Resources */,
+				FB827D7628D108C8007BD833 /* InfoPlist.strings in Resources */,
 				FBBC4EA728CFD5810033AB6D /* Localizable.strings in Resources */,
 				FBBC4E9E28CFCB920033AB6D /* LoadingCell.xib in Resources */,
 				FBBC4E6528C228760033AB6D /* SearchResultCell.xib in Resources */,
@@ -296,6 +301,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		FB827D7828D108C8007BD833 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FB827D7728D108C8007BD833 /* en */,
+				FB827D7928D108CF007BD833 /* nl */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		FBBC4E5328C1F3D10033AB6D /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
