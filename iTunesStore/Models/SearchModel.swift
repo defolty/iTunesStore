@@ -94,7 +94,20 @@ class SearchResult: Codable, CustomStringConvertible {
     
     var type: String {
         let kind = self.kind ?? "audiobook"
-        return typeForKind[kind] ?? kind
+        switch kind {
+        case "album": return NSLocalizedString("Album", comment: "Localized kind: Album")
+        case "audiobook": return NSLocalizedString("Audio Book", comment: "Localized kind: Audio Book")
+        case "book": return NSLocalizedString("Book", comment: "Localized kind: Book")
+        case "ebook": return NSLocalizedString("E-Book", comment: "Localized kind: E-Book")
+        case "feature-movie": return NSLocalizedString("Movie", comment: "Localized kind: Movie")
+        case "music-video": return NSLocalizedString("Music Video", comment: "Localized kind: Music Video")
+        case "podcast": return NSLocalizedString("Podcast", comment: "Localized kind: Podcast")
+        case "software": return NSLocalizedString("App", comment: "Localized kind: App")
+        case "song": return NSLocalizedString("Song", comment: "Localized kind: Song")
+        case "tv-episode": return NSLocalizedString("TV Episode", comment: "Localized kind: TV Episode")
+        default: break
+        }
+        return NSLocalizedString("Unknown", comment: "Localized kind: Unknown")
     }
     
     var artist: String {
